@@ -7,8 +7,9 @@ package tbotapi
 import (
 	"encoding/json"
 	"fmt"
-	"gopkg.in/resty.v0"
 	"net/http"
+
+	"gopkg.in/resty.v0"
 )
 
 type method string

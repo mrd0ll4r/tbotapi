@@ -16,7 +16,7 @@ script:
   - go vet ./...
   - diff <(goimports -d .) <(printf "")
   - diff <(golint ./...) <(printf "")
-  - go test -v ./...
+  - go test -v .
 
 
 notifications:

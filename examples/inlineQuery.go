@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"unicode"
 
-	"bitbucket.org/mrd0ll4r/tbotapi"
-	"bitbucket.org/mrd0ll4r/tbotapi/examples/boilerplate"
+	"github.com/mrd0ll4r/tbotapi"
+	"github.com/mrd0ll4r/tbotapi/examples/boilerplate"
 )
 
 func main() {

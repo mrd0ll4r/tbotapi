@@ -12,7 +12,7 @@ import (
 	"sync"
 	"syscall"
 
-	"bitbucket.org/mrd0ll4r/tbotapi"
+	"github.com/mrd0ll4r/tbotapi"
 )
 
 // BotFunc describes how the bot handles an update
