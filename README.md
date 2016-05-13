@@ -3,7 +3,9 @@
 This is a simple wrapper for the Telegram Bot-API for Go.
 It provides a high-level API in Go that works with the Telegram REST API.
 
+[![Build Status](https://travis-ci.org/mrd0ll4r/tbotapi.svg?branch=master)](https://travis-ci.org/mrd0ll4r/tbotapi)
 [![GoDoc](https://godoc.org/github.com/mrd0ll4r/tbotapi?status.svg)](https://godoc.org/github.com/mrd0ll4r/tbotapi)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mrd0ll4r/tbotapi)](https://goreportcard.com/report/github.com/mrd0ll4r/tbotapi)
 
 The implementation is pretty raw, i.e. you will just send and receive messages - you have to handle any command parsing or stuff yourself.
 
