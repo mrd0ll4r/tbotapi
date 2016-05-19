@@ -6,7 +6,7 @@ package tbotapi
 
 import "io"
 
-// NewOutgoingMessage creates a new outgoing message
+// NewOutgoingMessage creates a new outgoing message.
 func (api *TelegramBotAPI) NewOutgoingMessage(recipient Recipient, text string) *OutgoingMessage {
 	return &OutgoingMessage{
 		outgoingMessageBase: outgoingMessageBase{
@@ -20,7 +20,7 @@ func (api *TelegramBotAPI) NewOutgoingMessage(recipient Recipient, text string) 
 	}
 }
 
-// NewOutgoingLocation creates a new outgoing location
+// NewOutgoingLocation creates a new outgoing location.
 func (api *TelegramBotAPI) NewOutgoingLocation(recipient Recipient, latitude, longitude float32) *OutgoingLocation {
 	return &OutgoingLocation{
 		outgoingMessageBase: outgoingMessageBase{
@@ -34,7 +34,7 @@ func (api *TelegramBotAPI) NewOutgoingLocation(recipient Recipient, latitude, lo
 	}
 }
 
-// NewOutgoingVenue creates a new outgoing location
+// NewOutgoingVenue creates a new outgoing location.
 func (api *TelegramBotAPI) NewOutgoingVenue(recipient Recipient, latitude, longitude float32, title, address string) *OutgoingVenue {
 	return &OutgoingVenue{
 		outgoingMessageBase: outgoingMessageBase{
@@ -50,7 +50,7 @@ func (api *TelegramBotAPI) NewOutgoingVenue(recipient Recipient, latitude, longi
 	}
 }
 
-// NewOutgoingVideo creates a new outgoing video file
+// NewOutgoingVideo creates a new outgoing video file.
 func (api *TelegramBotAPI) NewOutgoingVideo(recipient Recipient, fileName string, reader io.Reader) *OutgoingVideo {
 	return &OutgoingVideo{
 		outgoingMessageBase: outgoingMessageBase{
@@ -66,7 +66,7 @@ func (api *TelegramBotAPI) NewOutgoingVideo(recipient Recipient, fileName string
 	}
 }
 
-// NewOutgoingVideoResend creates a new outgoing video file for re-sending
+// NewOutgoingVideoResend creates a new outgoing video file for re-sending.
 func (api *TelegramBotAPI) NewOutgoingVideoResend(recipient Recipient, fileID string) *OutgoingVideo {
 	return &OutgoingVideo{
 		outgoingMessageBase: outgoingMessageBase{
@@ -81,7 +81,7 @@ func (api *TelegramBotAPI) NewOutgoingVideoResend(recipient Recipient, fileID st
 	}
 }
 
-// NewOutgoingPhoto creates a new outgoing photo
+// NewOutgoingPhoto creates a new outgoing photo.
 func (api *TelegramBotAPI) NewOutgoingPhoto(recipient Recipient, fileName string, reader io.Reader) *OutgoingPhoto {
 	return &OutgoingPhoto{
 		outgoingMessageBase: outgoingMessageBase{
@@ -97,7 +97,7 @@ func (api *TelegramBotAPI) NewOutgoingPhoto(recipient Recipient, fileName string
 	}
 }
 
-// NewOutgoingPhotoResend creates a new outgoing photo for re-sending
+// NewOutgoingPhotoResend creates a new outgoing photo for re-sending.
 func (api *TelegramBotAPI) NewOutgoingPhotoResend(recipient Recipient, fileID string) *OutgoingPhoto {
 	return &OutgoingPhoto{
 		outgoingMessageBase: outgoingMessageBase{
@@ -112,7 +112,7 @@ func (api *TelegramBotAPI) NewOutgoingPhotoResend(recipient Recipient, fileID st
 	}
 }
 
-// NewOutgoingSticker creates a new outgoing sticker message
+// NewOutgoingSticker creates a new outgoing sticker message.
 func (api *TelegramBotAPI) NewOutgoingSticker(recipient Recipient, fileName string, reader io.Reader) *OutgoingSticker {
 	return &OutgoingSticker{
 		outgoingMessageBase: outgoingMessageBase{
@@ -128,7 +128,8 @@ func (api *TelegramBotAPI) NewOutgoingSticker(recipient Recipient, fileName stri
 	}
 }
 
-// NewOutgoingStickerResend creates a new outgoing sticker message for re-sending
+// NewOutgoingStickerResend creates a new outgoing sticker message for
+// re-sending.
 func (api *TelegramBotAPI) NewOutgoingStickerResend(recipient Recipient, fileID string) *OutgoingSticker {
 	return &OutgoingSticker{
 		outgoingMessageBase: outgoingMessageBase{
@@ -143,7 +144,7 @@ func (api *TelegramBotAPI) NewOutgoingStickerResend(recipient Recipient, fileID 
 	}
 }
 
-// NewOutgoingVoice creates a new outgoing voice note
+// NewOutgoingVoice creates a new outgoing voice note.
 func (api *TelegramBotAPI) NewOutgoingVoice(recipient Recipient, fileName string, reader io.Reader) *OutgoingVoice {
 	return &OutgoingVoice{
 		outgoingMessageBase: outgoingMessageBase{
@@ -159,7 +160,7 @@ func (api *TelegramBotAPI) NewOutgoingVoice(recipient Recipient, fileName string
 	}
 }
 
-// NewOutgoingVoiceResend creates a new outgoing voice note for re-sending
+// NewOutgoingVoiceResend creates a new outgoing voice note for re-sending.
 func (api *TelegramBotAPI) NewOutgoingVoiceResend(recipient Recipient, fileID string) *OutgoingVoice {
 	return &OutgoingVoice{
 		outgoingMessageBase: outgoingMessageBase{
@@ -174,7 +175,7 @@ func (api *TelegramBotAPI) NewOutgoingVoiceResend(recipient Recipient, fileID st
 	}
 }
 
-// NewOutgoingAudio creates a new outgoing audio file
+// NewOutgoingAudio creates a new outgoing audio file.
 func (api *TelegramBotAPI) NewOutgoingAudio(recipient Recipient, fileName string, reader io.Reader) *OutgoingAudio {
 	return &OutgoingAudio{
 		outgoingMessageBase: outgoingMessageBase{
@@ -190,7 +191,7 @@ func (api *TelegramBotAPI) NewOutgoingAudio(recipient Recipient, fileName string
 	}
 }
 
-// NewOutgoingAudioResend creates a new outgoing audio file for re-sending
+// NewOutgoingAudioResend creates a new outgoing audio file for re-sending.
 func (api *TelegramBotAPI) NewOutgoingAudioResend(recipient Recipient, fileID string) *OutgoingAudio {
 	return &OutgoingAudio{
 		outgoingMessageBase: outgoingMessageBase{
@@ -205,7 +206,7 @@ func (api *TelegramBotAPI) NewOutgoingAudioResend(recipient Recipient, fileID st
 	}
 }
 
-// NewOutgoingDocument creates a new outgoing file
+// NewOutgoingDocument creates a new outgoing file.
 func (api *TelegramBotAPI) NewOutgoingDocument(recipient Recipient, fileName string, reader io.Reader) *OutgoingDocument {
 	return &OutgoingDocument{
 		outgoingMessageBase: outgoingMessageBase{
@@ -221,7 +222,7 @@ func (api *TelegramBotAPI) NewOutgoingDocument(recipient Recipient, fileName str
 	}
 }
 
-// NewOutgoingDocumentResend creates a new outgoing file for re-sending
+// NewOutgoingDocumentResend creates a new outgoing file for re-sending.
 func (api *TelegramBotAPI) NewOutgoingDocumentResend(recipient Recipient, fileID string) *OutgoingDocument {
 	return &OutgoingDocument{
 		outgoingMessageBase: outgoingMessageBase{
@@ -236,7 +237,7 @@ func (api *TelegramBotAPI) NewOutgoingDocumentResend(recipient Recipient, fileID
 	}
 }
 
-// NewOutgoingForward creates a new outgoing, forwarded message
+// NewOutgoingForward creates a new outgoing, forwarded message.
 func (api *TelegramBotAPI) NewOutgoingForward(recipient Recipient, origin Chat, messageID int) *OutgoingForward {
 	return &OutgoingForward{
 		outgoingMessageBase: outgoingMessageBase{
@@ -250,7 +251,7 @@ func (api *TelegramBotAPI) NewOutgoingForward(recipient Recipient, origin Chat, 
 	}
 }
 
-// NewOutgoingChatAction creates a new outgoing chat action
+// NewOutgoingChatAction creates a new outgoing chat action.
 func (api *TelegramBotAPI) NewOutgoingChatAction(recipient Recipient, action ChatAction) *OutgoingChatAction {
 	return &OutgoingChatAction{
 		outgoingBase: outgoingBase{
@@ -261,7 +262,8 @@ func (api *TelegramBotAPI) NewOutgoingChatAction(recipient Recipient, action Cha
 	}
 }
 
-// NewOutgoingUserProfilePhotosRequest creates a new request for a users profile photos
+// NewOutgoingUserProfilePhotosRequest creates a new request for a users
+// profile photos.
 func (api *TelegramBotAPI) NewOutgoingUserProfilePhotosRequest(userID int) *OutgoingUserProfilePhotosRequest {
 	return &OutgoingUserProfilePhotosRequest{
 		api:    api,
@@ -269,7 +271,8 @@ func (api *TelegramBotAPI) NewOutgoingUserProfilePhotosRequest(userID int) *Outg
 	}
 }
 
-// NewOutgoingKickChatMember creates a request to kick a member from a group chat or channel.
+// NewOutgoingKickChatMember creates a request to kick a member from a
+// group chat or channel.
 func (api *TelegramBotAPI) NewOutgoingKickChatMember(chat Recipient, userID int) *OutgoingKickChatMember {
 	return &OutgoingKickChatMember{
 		api:       api,
@@ -278,7 +281,8 @@ func (api *TelegramBotAPI) NewOutgoingKickChatMember(chat Recipient, userID int)
 	}
 }
 
-// NewOutgoingUnbanChatMember creates a request to unban a member of a group chat or channel.
+// NewOutgoingUnbanChatMember creates a request to unban a member of a
+// group chat or channel.
 func (api *TelegramBotAPI) NewOutgoingUnbanChatMember(chat Recipient, userID int) *OutgoingUnbanChatMember {
 	return &OutgoingUnbanChatMember{
 		api:       api,
@@ -295,7 +299,7 @@ func (api *TelegramBotAPI) NewOutgoingCallbackQueryResponse(queryID string) *Out
 	}
 }
 
-// NewInlineQueryAnswer creates a new inline query answer
+// NewInlineQueryAnswer creates a new inline query answer.
 func (api *TelegramBotAPI) NewInlineQueryAnswer(queryID string, results []InlineQueryResult) *InlineQueryAnswer {
 	return &InlineQueryAnswer{
 		api:     api,

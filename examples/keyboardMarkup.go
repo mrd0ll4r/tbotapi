@@ -21,29 +21,29 @@ func main() {
 			msg := update.Message
 			typ := msg.Type()
 			if typ.IsChatAction() {
-				//ignore chat actions, like group creates or joins
+				// Ignore chat actions, like group creates or joins.
 				fmt.Println("Ignoring chat action")
 				return
 			}
 			if msg.Chat.IsChannel() {
-				//ignore messages _about_ channels (bots cannot receive from channels, but will probably get events like channel creations)
+				// Ignore messages _about_ channels (bots cannot receive from channels, but will probably get events like channel creations).
 				fmt.Println("Ignoring channel message")
 				return
 			}
 
-			// display the incoming message
-			// msg.Chat implements fmt.Stringer, so it'll display nicely
-			// MessageType implements fmt.Stringer, so it'll display nicely
+			// Display the incoming message.
+			// msg.Chat implements fmt.Stringer, so it'll display nicely.
+			// MessageType implements fmt.Stringer, so it'll display nicely.
 			fmt.Printf("<-%d, From:\t%s, Type: %s \n", msg.ID, msg.Chat, typ)
 
-			// create a message with some keyboard markup
+			// Create a message with some keyboard markup.
 			toSend := api.NewOutgoingMessage(tbotapi.NewRecipientFromChat(msg.Chat), "What time is it where I am?")
 			toSend.SetReplyKeyboardMarkup(tbotapi.ReplyKeyboardMarkup{
 				Keyboard:        [][]tbotapi.KeyboardButton{[]tbotapi.KeyboardButton{tbotapi.KeyboardButton{Text: time.Now().Format(time.RFC1123Z)}}},
 				OneTimeKeyboard: true,
 			})
 
-			// send it
+			// Send it.
 			outMsg, err := toSend.Send()
 
 			if err != nil {
@@ -60,6 +60,6 @@ func main() {
 		}
 	}
 
-	// run the bot, this will block
+	// Run the bot, this will block.
 	boilerplate.RunBot(apiToken, updateFunc, "KeyboardMarkup", "Demonstrates keyboard markup")
 }

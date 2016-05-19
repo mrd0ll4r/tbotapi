@@ -21,15 +21,15 @@ func main() {
 			msg := update.Message
 			typ := msg.Type()
 			if typ != tbotapi.TextMessage {
-				//ignore non-text messages for now
+				// Ignore non-text messages for now.
 				fmt.Println("Ignoring non-text message")
 				return
 			}
-			// Note: Bots cannot receive from channels, at least no text messages. So we don't have to distinguish anything here
+			// Note: Bots cannot receive from channels, at least no text messages. So we don't have to distinguish anything here.
 
-			// display the incoming message
-			// msg.Chat implements fmt.Stringer, so it'll display nicely
-			// we know it's a text message, so we can safely use the Message.Text pointer
+			// Display the incoming message.
+			// msg.Chat implements fmt.Stringer, so it'll display nicely.
+			// We know it's a text message, so we can safely use the Message.Text pointer.
 			fmt.Printf("<-%d, From:\t%s, Text: %s \n", msg.ID, msg.Chat, *msg.Text)
 
 			fmt.Printf("Sending ChatActionTyping to %s\n", msg.Chat)
@@ -40,7 +40,7 @@ func main() {
 			}
 			time.Sleep(2 * time.Second)
 
-			// clear chat action
+			// Clear chat action.
 			outMsg, err := api.NewOutgoingMessage(tbotapi.NewRecipientFromChat(msg.Chat), "Finished typing.").Send()
 
 			if err != nil {
@@ -57,7 +57,7 @@ func main() {
 			}
 			time.Sleep(2 * time.Second)
 
-			// clear chat action and tell them we're done
+			// Clear chat action and tell them we're done.
 			outMsg, err = api.NewOutgoingMessage(tbotapi.NewRecipientFromChat(msg.Chat), "Done").Send()
 
 			if err != nil {
@@ -74,6 +74,6 @@ func main() {
 		}
 	}
 
-	// run the bot, this will block
+	// Run the bot, this will block.
 	boilerplate.RunBot(apiToken, updateFunc, "ChatAction", "Demonstrates chat actions")
 }
