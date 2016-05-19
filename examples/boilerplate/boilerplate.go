@@ -15,12 +15,13 @@ import (
 	"github.com/mrd0ll4r/tbotapi"
 )
 
-// BotFunc describes how the bot handles an update
+// BotFunc describes how the bot handles an update.
 type BotFunc func(update tbotapi.Update, api *tbotapi.TelegramBotAPI)
 
 // RunBot runs a bot.
 // THIS IS JUST FOR DEMONSTRATION! NOT TO BE USED IN PRODUCTION!
-// It will block until either something very bad happens or closing is closed.
+// It will block until either something very bad happens or closing is
+// closed.
 func RunBot(apiKey string, bot BotFunc, name, description string) {
 	fmt.Printf("%s: %s\n", name, description)
 	fmt.Println("Starting...")
@@ -30,7 +31,7 @@ func RunBot(apiKey string, bot BotFunc, name, description string) {
 		log.Fatal(err)
 	}
 
-	// just to show its working
+	// Just to show its working.
 	fmt.Printf("User ID: %d\n", api.ID)
 	fmt.Printf("Bot Name: %s\n", api.Name)
 	fmt.Printf("Bot Username: %s\n", api.Username)
@@ -56,7 +57,7 @@ func RunBot(apiKey string, bot BotFunc, name, description string) {
 		}
 	}()
 
-	// ensure a clean shutdown
+	// Ensure a clean shutdown.
 	closing := make(chan struct{})
 	shutdown := make(chan os.Signal)
 	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
@@ -70,12 +71,12 @@ func RunBot(apiKey string, bot BotFunc, name, description string) {
 
 	fmt.Println("Bot started. Press CTRL-C to close...")
 
-	// wait for the signal
+	// Wait for the signal.
 	<-closing
 	fmt.Println("Closing...")
 
-	// always close the API first, let it clean up the update loop
-	api.Close() //this might take a while
+	// Always close the API first, let it clean up the update loop.
+	api.Close() // This might take a while.
 	close(closed)
 	wg.Wait()
 }

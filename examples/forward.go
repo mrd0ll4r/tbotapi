@@ -20,18 +20,18 @@ func main() {
 			msg := update.Message
 			typ := msg.Type()
 			if typ != tbotapi.TextMessage {
-				//ignore non-text messages for now
+				// Ignore non-text messages for now.
 				fmt.Println("Ignoring non-text message")
 				return
 			}
-			// Note: Bots cannot receive from channels, at least no text messages. So we don't have to distinguish anything here
+			// Note: Bots cannot receive from channels, at least no text messages. So we don't have to distinguish anything here.
 
-			// display the incoming message
-			// msg.Chat implements fmt.Stringer, so it'll display nicely
-			// we know it's a text message, so we can safely use the Message.Text pointer
+			// Display the incoming message.
+			// msg.Chat implements fmt.Stringer, so it'll display nicely.
+			// We know it's a text message, so we can safely use the Message.Text pointer.
 			fmt.Printf("<-%d, From:\t%s, Text: %s \n", msg.ID, msg.Chat, *msg.Text)
 
-			// now simply forward that back
+			// Now simply forward that back.
 			outMsg, err := api.NewOutgoingForward(tbotapi.NewRecipientFromChat(msg.Chat), msg.Chat, msg.ID).Send()
 
 			if err != nil {
@@ -48,6 +48,6 @@ func main() {
 		}
 	}
 
-	// run the bot, this will block
+	// Run the bot, this will block.
 	boilerplate.RunBot(apiToken, updateFunc, "Forward", "Forwards messages back")
 }

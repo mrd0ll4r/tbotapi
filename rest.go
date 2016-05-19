@@ -68,10 +68,10 @@ func (c *client) uploadFile(m method, result interface{}, data file, fields quer
 }
 
 func parseResponseBody(c *resty.Client, res *resty.Response) (err error) {
-	// Handles only JSON
+	// Handles only JSON.
 	ct := res.Header().Get(http.CanonicalHeaderKey("Content-Type"))
 	if resty.IsJSONType(ct) {
-		// Considered as Result
+		// Considered as Result.
 		if res.StatusCode() > 199 && res.StatusCode() < 500 {
 			if res.Request.Result != nil {
 				err = json.Unmarshal(res.Body(), res.Request.Result)

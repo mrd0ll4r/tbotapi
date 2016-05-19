@@ -6,7 +6,7 @@ package tbotapi
 
 import "io"
 
-// Querystring is a type to represent querystring-applicable data
+// Querystring is a type to represent querystring-applicable data.
 type querystring map[string]string
 
 type querystringer interface {
