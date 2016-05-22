@@ -5,8 +5,13 @@
 package tbotapi
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
+	"os"
 	"sync"
 	"time"
 )
@@ -48,8 +53,9 @@ const apiBaseURI string = "https://api.telegram.org/bot%s"
 // provided.
 // It will call the GetMe method to retrieve the bots id, name and
 // username.
-// Additionally, an update loop is started, pumping updates into the
-// Updates channel.
+//
+// This bot uses long polling to retrieve its updates. If a webhook was set
+// for the given apiKey, this will remove it.
 func New(apiKey string) (*TelegramBotAPI, error) {
 	toReturn := TelegramBotAPI{
 		Updates:  make(chan BotUpdate),
@@ -65,10 +71,66 @@ func New(apiKey string) (*TelegramBotAPI, error) {
 	toReturn.Name = user.User.FirstName
 	toReturn.Username = *user.User.Username
 
+	err = toReturn.removeWebhook()
+	if err != nil {
+		return nil, err
+	}
+
 	toReturn.wg.Add(1)
 	go toReturn.updateLoop()
 
 	return &toReturn, nil
+}
+
+// NewWithWebhook creates a new API client for a Telegram bot using the apiKey
+// provided. It will call the GetMe method to retrieve the bots id, name and
+// username.
+// In addition to the API client, a http.HandlerFunc will be returned. This
+// handler func reacts to webhook requests and will put updates into the
+// Updates channel.
+func NewWithWebhook(apiKey, webhookURL, certificate string) (*TelegramBotAPI, http.HandlerFunc, error) {
+	toReturn := TelegramBotAPI{
+		Updates:  make(chan BotUpdate),
+		baseURIs: createEndpoints(fmt.Sprintf(apiBaseURI, apiKey)),
+		closed:   make(chan struct{}),
+		c:        newClient(fmt.Sprintf(apiBaseURI, apiKey)),
+	}
+	user, err := toReturn.GetMe()
+	if err != nil {
+		return nil, nil, err
+	}
+	toReturn.ID = user.User.ID
+	toReturn.Name = user.User.FirstName
+	toReturn.Username = *user.User.Username
+
+	file, err := os.Open(certificate)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	err = toReturn.setWebhook(webhookURL, certificate, file)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	updateFunc := func(w http.ResponseWriter, r *http.Request) {
+		bytes, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			toReturn.Updates <- BotUpdate{err: err}
+			return
+		}
+
+		update := &Update{}
+		err = json.Unmarshal(bytes, update)
+		if err != nil {
+			toReturn.Updates <- BotUpdate{err: err}
+			return
+		}
+
+		toReturn.Updates <- BotUpdate{update: *update}
+	}
+
+	return &toReturn, updateFunc, nil
 }
 
 // Close shuts down this client.
@@ -162,6 +224,46 @@ func (api *TelegramBotAPI) getUpdatesByOffset(offset int) (*updateResponse, erro
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (api *TelegramBotAPI) setWebhook(url, fileName string, r io.Reader) error {
+	req := outgoingSetWebhook{
+		URL: url,
+		outgoingFileBase: outgoingFileBase{
+			fileName: fileName,
+			r:        r,
+		},
+	}
+	resp := &baseResponse{}
+
+	_, err := api.c.uploadFile(setWebhook, resp, file{fieldName: "certificate", fileName: req.fileName, r: req.r}, &req)
+	if err != nil {
+		return err
+	}
+
+	err = check(resp)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (api *TelegramBotAPI) removeWebhook() error {
+	req := outgoingSetWebhook{
+		URL: "",
+	}
+	resp := &baseResponse{}
+
+	_, err := api.c.postJSON(setWebhook, resp, req)
+	if err != nil {
+		return err
+	}
+
+	err = check(resp)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // GetMe returns basic information about the bot in form of a UserResponse.

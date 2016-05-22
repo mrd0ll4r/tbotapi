@@ -4,11 +4,28 @@
 
 package tbotapi
 
-import "fmt"
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 )
+
+type outgoingSetWebhook struct {
+	URL string `json:"url"`
+	outgoingFileBase
+}
+
+// querystring implements querystringer to represent the outgoing certificate
+// file.
+func (ow *outgoingSetWebhook) querystring() querystring {
+	toReturn := make(map[string]string)
+
+	if ow.URL != "" {
+		toReturn["url"] = ow.URL
+	}
+
+	return querystring(toReturn)
+}
 
 // outgoingBase contains fields shared by most of the outgoing requests.
 type outgoingBase struct {
