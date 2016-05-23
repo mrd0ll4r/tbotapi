@@ -13,7 +13,7 @@ The implementation is pretty raw, i.e. you will just send and receive messages -
 
 A simple
 
-    go get -u bitbucket.org/mrd0ll4r/tbotapi
+    go get -u github.com/mrd0ll4r/tbotapi
 
 should do it.
 
@@ -49,13 +49,6 @@ If you want to contribute code, make sure to read the [contributing guidelines].
 
 
 [contributing guidelines]: https://github.com/mrd0ll4r/tbotapi/blob/master/CONTRIBUTING.md
-
-### Things that need to be done ###
-
-* Implement a test
-* Implement the API 2.0 changes
-* Fix godoc line length
-* Move these TODOs to GitHub issues
 
 ### License
 This work is licensed under the MIT License. A copy of the MIT License can be found in the `LICENSE` file.
