@@ -13,7 +13,7 @@ The implementation is pretty raw, i.e. you will just send and receive messages -
 
 A simple
 
-    go get -u bitbucket.org/mrd0ll4r/tbotapi
+    go get -u github.com/mrd0ll4r/tbotapi
 
 should do it.
 
