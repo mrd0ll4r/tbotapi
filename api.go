@@ -241,11 +241,7 @@ func (api *TelegramBotAPI) setWebhook(url, fileName string, r io.Reader) error {
 		return err
 	}
 
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+	return check(resp)
 }
 
 func (api *TelegramBotAPI) removeWebhook() error {
@@ -259,11 +255,7 @@ func (api *TelegramBotAPI) removeWebhook() error {
 		return err
 	}
 
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+	return check(resp)
 }
 
 // GetMe returns basic information about the bot in form of a UserResponse.

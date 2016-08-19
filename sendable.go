@@ -95,6 +95,7 @@ func (op *OutgoingUserProfilePhotosRequest) Send() (*UserProfilePhotosResponse, 
 	if err != nil {
 		return nil, err
 	}
+
 	err = check(&resp.baseResponse)
 	if err != nil {
 		return nil, err
@@ -111,11 +112,8 @@ func (oc *OutgoingChatAction) Send() error {
 	if err != nil {
 		return err
 	}
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	return check(resp)
 }
 
 // Send sends the inline query answer.
@@ -127,11 +125,8 @@ func (ia *InlineQueryAnswer) Send() error {
 	if err != nil {
 		return err
 	}
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	return check(resp)
 }
 
 // Send sends the kick request.
@@ -142,11 +137,8 @@ func (kr *OutgoingKickChatMember) Send() error {
 	if err != nil {
 		return err
 	}
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	return check(resp)
 }
 
 // Send sends the unban request.
@@ -157,11 +149,8 @@ func (ub *OutgoingUnbanChatMember) Send() error {
 	if err != nil {
 		return err
 	}
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	return check(resp)
 }
 
 // Send sends the callback response.
@@ -172,9 +161,6 @@ func (cbr *OutgoingCallbackQueryResponse) Send() error {
 	if err != nil {
 		return err
 	}
-	err = check(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	return check(resp)
 }
