@@ -45,7 +45,7 @@ func main() {
 			// id, not value.
 			fmt.Println("Chosen inline query result (ID):", update.ChosenInlineResult.ID)
 		default:
-			fmt.Printf("Ignoring unknown Update type.")
+			fmt.Println("Ignoring unknown Update type.")
 		}
 	}
 

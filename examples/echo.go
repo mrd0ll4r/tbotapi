@@ -44,7 +44,7 @@ func main() {
 		case tbotapi.ChosenInlineResultUpdate:
 			fmt.Println("Ignoring chosen inline query result (ID): ", update.ChosenInlineResult.ID)
 		default:
-			fmt.Printf("Ignoring unknown Update type.")
+			fmt.Println("Ignoring unknown Update type.")
 		}
 	}
 

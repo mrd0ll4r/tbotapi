@@ -39,7 +39,7 @@ func main() {
 			// Create a message with some keyboard markup.
 			toSend := api.NewOutgoingMessage(tbotapi.NewRecipientFromChat(msg.Chat), "What time is it where I am?")
 			toSend.SetReplyKeyboardMarkup(tbotapi.ReplyKeyboardMarkup{
-				Keyboard:        [][]tbotapi.KeyboardButton{[]tbotapi.KeyboardButton{tbotapi.KeyboardButton{Text: time.Now().Format(time.RFC1123Z)}}},
+				Keyboard:        [][]tbotapi.KeyboardButton{[]tbotapi.KeyboardButton{{Text: time.Now().Format(time.RFC1123Z)}}},
 				OneTimeKeyboard: true,
 			})
 
@@ -56,7 +56,7 @@ func main() {
 		case tbotapi.ChosenInlineResultUpdate:
 			fmt.Println("Ignoring chosen inline query result (ID): ", update.ChosenInlineResult.ID)
 		default:
-			fmt.Printf("Ignoring unknown Update type.")
+			fmt.Println("Ignoring unknown Update type.")
 		}
 	}
 
