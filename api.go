@@ -25,7 +25,8 @@ type TelegramBotAPI struct {
 	Updates  chan BotUpdate // A channel providing updates this bot receives.
 	baseURIs map[method]string
 	closed   chan struct{}
-	c        *client
+	c        *client // Client used to do all outgoing requests.
+	updateC  *client // Special client just used to get updates.
 	wg       sync.WaitGroup
 }
 
@@ -62,6 +63,7 @@ func New(apiKey string) (*TelegramBotAPI, error) {
 		baseURIs: createEndpoints(fmt.Sprintf(apiBaseURI, apiKey)),
 		closed:   make(chan struct{}),
 		c:        newClient(fmt.Sprintf(apiBaseURI, apiKey)),
+		updateC:  newClient(fmt.Sprintf(apiBaseURI, apiKey)),
 	}
 	user, err := toReturn.GetMe()
 	if err != nil {
@@ -94,6 +96,7 @@ func NewWithWebhook(apiKey, webhookURL, certificate string) (*TelegramBotAPI, ht
 		baseURIs: createEndpoints(fmt.Sprintf(apiBaseURI, apiKey)),
 		closed:   make(chan struct{}),
 		c:        newClient(fmt.Sprintf(apiBaseURI, apiKey)),
+		updateC:  newClient(fmt.Sprintf(apiBaseURI, apiKey)),
 	}
 	user, err := toReturn.GetMe()
 	if err != nil {
@@ -181,7 +184,7 @@ func (api *TelegramBotAPI) updateLoop() {
 
 func (api *TelegramBotAPI) getUpdates() (*updateResponse, error) {
 	resp := &updateResponse{}
-	response, err := api.c.getQuerystring(getUpdates, resp, map[string]string{"timeout": fmt.Sprint(60)})
+	response, err := api.updateC.getQuerystring(getUpdates, resp, map[string]string{"timeout": fmt.Sprint(60)})
 
 	if err != nil {
 		if response != nil {
@@ -203,7 +206,7 @@ func (api *TelegramBotAPI) getUpdates() (*updateResponse, error) {
 
 func (api *TelegramBotAPI) getUpdatesByOffset(offset int) (*updateResponse, error) {
 	resp := &updateResponse{}
-	response, err := api.c.getQuerystring(getUpdates, resp, map[string]string{
+	response, err := api.updateC.getQuerystring(getUpdates, resp, map[string]string{
 		"timeout": fmt.Sprint(60),
 		"offset":  fmt.Sprint(offset),
 	})
