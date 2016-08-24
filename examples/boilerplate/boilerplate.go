@@ -21,10 +21,10 @@ import (
 type BotFunc func(update tbotapi.Update, api *tbotapi.TelegramBotAPI)
 
 // RunBot runs a bot.
-// THIS IS JUST FOR DEMONSTRATION! NOT TO BE USED IN PRODUCTION!
-// It will block until either something very bad happens or closing is
-// closed.
+// It will block until either something very bad happens or closing is closed.
 func RunBot(apiKey string, bot BotFunc, name, description string) {
+	closing := make(chan struct{})
+
 	fmt.Printf("%s: %s\n", name, description)
 	fmt.Println("Starting...")
 
@@ -50,6 +50,7 @@ func RunBot(apiKey string, bot BotFunc, name, description string) {
 				return
 			case update := <-api.Updates:
 				if update.Error() != nil {
+					// TODO handle this properly
 					fmt.Printf("Update error: %s\n", update.Error())
 					continue
 				}
@@ -60,14 +61,11 @@ func RunBot(apiKey string, bot BotFunc, name, description string) {
 	}()
 
 	// Ensure a clean shutdown.
-	closing := make(chan struct{})
 	shutdown := make(chan os.Signal)
 	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
 		<-shutdown
-		signal.Stop(shutdown)
-		close(shutdown)
 		close(closing)
 	}()
 
@@ -78,13 +76,16 @@ func RunBot(apiKey string, bot BotFunc, name, description string) {
 	fmt.Println("Closing...")
 
 	// Always close the API first, let it clean up the update loop.
-	api.Close() // This might take a while.
+	// This might take a while.
+	api.Close()
 	close(closed)
 	wg.Wait()
 }
 
 // RunBotOnWebhook runs the given BotFunc with a webhook.
 func RunBotOnWebhook(apiKey string, bot BotFunc, name, description, webhookHost string, webhookPort uint16, pubkey, privkey string) {
+	closing := make(chan struct{})
+
 	fmt.Printf("%s: %s\n", name, description)
 	fmt.Println("Starting...")
 	u := url.URL{
@@ -115,6 +116,7 @@ func RunBotOnWebhook(apiKey string, bot BotFunc, name, description, webhookHost 
 				return
 			case update := <-api.Updates:
 				if update.Error() != nil {
+					// TODO handle this properly
 					fmt.Printf("Update error: %s\n", update.Error())
 					continue
 				}
@@ -132,14 +134,11 @@ func RunBotOnWebhook(apiKey string, bot BotFunc, name, description, webhookHost 
 	}()
 
 	// Ensure a clean shutdown.
-	closing := make(chan struct{})
 	shutdown := make(chan os.Signal)
 	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
 		<-shutdown
-		signal.Stop(shutdown)
-		close(shutdown)
 		close(closing)
 	}()
 
@@ -150,7 +149,7 @@ func RunBotOnWebhook(apiKey string, bot BotFunc, name, description, webhookHost 
 	fmt.Println("Closing...")
 
 	// Always close the API first.
-	api.Close() // This is instant for webhook based bots.
+	api.Close()
 	close(closed)
 	wg.Wait()
 }
