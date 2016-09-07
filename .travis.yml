@@ -3,7 +3,7 @@ language: go
 sudo: false
 
 go:
-  - 1.6
+  - 1.7
   - tip
 
 install:
@@ -13,10 +13,10 @@ install:
 
 
 script:
-  - go vet ./...
-  - diff <(goimports -d .) <(printf "")
-  - diff <(golint ./...) <(printf "")
-  - go test -v .
+- go test -v .
+- go vet $(go list ./... | grep -v /vendor/)
+- diff <(goimports -d $(find . -type f -name '*.go' -not -path "./vendor/*")) <(printf "")
+- (for d in $(go list ./... | grep -v /vendor/); do diff <(golint $d) <(printf "") || exit 1;  done)
 
 
 notifications:
