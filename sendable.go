@@ -153,6 +153,18 @@ func (ub *OutgoingUnbanChatMember) Send() error {
 	return check(resp)
 }
 
+// Send sends the restrict request.
+func (rc *OutgoingRestrictChatMember) Send() error {
+	resp := &baseResponse{}
+	_, err := rc.api.c.postJSON(restrictChatMember, resp, rc)
+
+	if err != nil {
+		return err
+	}
+
+	return check(resp)
+}
+
 // Send sends the callback response.
 func (cbr *OutgoingCallbackQueryResponse) Send() error {
 	resp := &baseResponse{}

@@ -34,6 +34,7 @@ const (
 	answerInlineQuery    = method("AnswerInlineQuery")
 	kickChatMember       = method("KickChatMember")
 	unbanChatMember      = method("UnbanChatMember")
+	restrictChatMember   = method("RestrictChatMember")
 	answerCallbackQuery  = method("AnswerCallbackQuery")
 )
 
@@ -116,6 +117,7 @@ func createEndpoints(baseURI string) map[method]string {
 	toReturn[setWebhook] = fmt.Sprint(baseURI, "/", string(setWebhook))
 	toReturn[getFile] = fmt.Sprint(baseURI, "/", string(getFile))
 	toReturn[answerInlineQuery] = fmt.Sprint(baseURI, "/", string(answerInlineQuery))
+	toReturn[restrictChatMember] = fmt.Sprint(baseURI, "/", string(restrictChatMember))
 
 	return toReturn
 }
