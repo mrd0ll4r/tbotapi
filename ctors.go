@@ -291,6 +291,16 @@ func (api *TelegramBotAPI) NewOutgoingUnbanChatMember(chat Recipient, userID int
 	}
 }
 
+// NewOutgoingRestrictChatMember creates a request to restrict a member of a
+// group chat or channel.
+func (api *TelegramBotAPI) NewOutgoingRestrictChatMember(chat Recipient, userID int) *OutgoingRestrictChatMember {
+	return &OutgoingRestrictChatMember{
+		api:       api,
+		Recipient: chat,
+		UserID:    userID,
+	}
+}
+
 // NewOutgoingCallbackQueryResponse creates a response to a callback query.
 func (api *TelegramBotAPI) NewOutgoingCallbackQueryResponse(queryID string) *OutgoingCallbackQueryResponse {
 	return &OutgoingCallbackQueryResponse{

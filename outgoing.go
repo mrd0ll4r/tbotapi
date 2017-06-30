@@ -336,6 +336,18 @@ type OutgoingUnbanChatMember struct {
 	UserID    int       `json:"user_id"`
 }
 
+// OutgoingRestrictChatMember represents a request to restrict a chat member.
+type OutgoingRestrictChatMember struct {
+	api                   *TelegramBotAPI
+	Recipient             Recipient `json:"chat_id"`
+	UserID                int       `json:"user_id"`
+	UntilDate             int       `json:"until_date,omitempty"`
+	CanSendMessages       bool      `json:"can_send_messages,omitempty"`
+	CanSendMediaMessages  bool      `json:"can_send_media_messages,omitempty"`
+	CanSendOtherMessages  bool      `json:"can_send_other_messages,omitempty"`
+	CanAddWebPagePreviews bool      `json:"can_add_web_page_previews,omitempty"`
+}
+
 // OutgoingCallbackQueryResponse represents a response to a callback query.
 type OutgoingCallbackQueryResponse struct {
 	api             *TelegramBotAPI
